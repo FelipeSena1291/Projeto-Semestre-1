@@ -1,68 +1,16 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.InputMismatchException;
-
-class Funcionario{
-    String nome;
-    int id, matricula;
-    double salarioFinal;
-
-    public Funcionario (int id,String nome, int matricula,double salarioFinal){
-        this.nome = nome;
-        this.id = id;
-        this.matricula = matricula;
-        this.salarioFinal = salarioFinal;
-    }
-    public void exibirDados(){
-        System.out.println("ID: " + id);
-        System.out.println("Nome: " + nome);
-        System.out.println("Matricula: " + matricula);
-        System.out.println("Salario: " + salarioFinal);
-    }
-
-}
-class FuncionarioComisao extends Funcionario {
-    double valorDeVendas,comissao;
-
-    public FuncionarioComisao (int id, String nome,int matricula,double salarioFinal,double valorDeVendas,double comissao){
-        super(id, nome,matricula,salarioFinal);
-        this.valorDeVendas = valorDeVendas;
-        this.comissao = comissao;
-    }
-    @Override
-    public void exibirDados(){
-        super.exibirDados();
-        System.out.println("Valor de Venda: " + valorDeVendas);
-        System.out.println("Valor da Comissão: " + comissao);
-        System.out.println("Salario Final: " + ( salarioFinal+(valorDeVendas*comissao)/100));
-    }
-
-}
-class FuncionarioProducao extends Funcionario {
-    double  quantidadeDePecasVendidas, valorDaPeca;
-
-    public FuncionarioProducao(int id, String nome, int matricula,double salarioFinal, double quantidadeDePecasVendidas, double valorDaPeca){
-        super(id, nome, matricula, salarioFinal);
-        this.quantidadeDePecasVendidas = quantidadeDePecasVendidas;
-        this.valorDaPeca = valorDaPeca;
-    }
-    @Override
-    public void exibirDados() {
-        super.exibirDados();
-        System.out.print("Quantidade de peças vendidas: " + quantidadeDePecasVendidas);
-        System.out.println("Valor da peça: " + valorDaPeca);
-        System.out.println("Salario Final: " + ( salarioFinal+(quantidadeDePecasVendidas * valorDaPeca)));
-    }
-}
-
+import java.util.Locale;
 
 public class Main{
     public static void main (String [] args ){
         int opcao, contador = 0;
 
+        Locale.setDefault(Locale.US);
         Scanner entrada = new Scanner(System.in);
 
-        ArrayList<Funcionario> funcionarios = new ArrayList<>();
+        ArrayList<Funcionario> listarFuncionarios = new ArrayList<>();
 
         do {
             System.out.println();
@@ -106,7 +54,7 @@ public class Main{
 
                     contador++;
 
-                    funcionarios.add(new Funcionario(contador,nome,matricula,salario));
+                    listarFuncionarios.add(new Funcionario(contador,nome,matricula,salario));
                     break;
                 case 2:
                     entrada.nextLine();
@@ -120,16 +68,20 @@ public class Main{
                     System.out.print("Informe o Salario: ");
                     double salarioComissao = testarValoresNegativos(entrada);
 
-                    System.out.println("Informe o valor total de vendas: ");
+                    System.out.println("Informe o valor total de vendas R$: ");
                     double vendasTotal = testarValoresNegativos(entrada);
 
                     System.out.println("Valor da comissao (%): ");
-                    double comissao = testarValoresNegativos(entrada);
+                    int comissao = entrada.nextInt();
+                    while (comissao < 0){
+                        System.out.print("Informe um  valor valido");
+                        comissao = entrada.nextInt();
+                    }
 
                     entrada.nextLine();
                     contador++;
 
-                    funcionarios.add(new FuncionarioComisao(contador, nomeComissao, matriculaComissao,salarioComissao, vendasTotal, comissao));
+                    listarFuncionarios.add(new FuncionarioComisao(contador, nomeComissao, matriculaComissao,salarioComissao, vendasTotal, comissao));
                     break;
                 case 3:
                     entrada.nextLine();
@@ -144,7 +96,11 @@ public class Main{
                     double salarioProducao = testarValoresNegativos(entrada);
 
                     System.out.println("Informe quantidade de peças produzidas: ");
-                    double vendasProducao = testarValoresNegativos(entrada);
+                    int vendasProducao = entrada.nextInt();
+                    while (vendasProducao < 0){
+                        System.out.print("Informe um  valor valido");
+                        vendasProducao = entrada.nextInt();
+                    }
 
                     System.out.println("Valor por cada producao: ");
                     double Producao = testarValoresNegativos(entrada);
@@ -152,12 +108,12 @@ public class Main{
                     entrada.nextLine();
                     contador++;
 
-                    funcionarios.add(new FuncionarioProducao(contador, nomeProducao, matriculaProducao,salarioProducao, vendasProducao, Producao));
+                    listarFuncionarios.add(new FuncionarioProducao(contador, nomeProducao, matriculaProducao,salarioProducao, vendasProducao, Producao));
 
                     break;
 
                 case 4:
-                    for(Funcionario f: funcionarios){
+                    for(Funcionario f: listarFuncionarios){
                         System.out.println("=======================");
                         f.exibirDados();
 
@@ -180,4 +136,57 @@ public class Main{
     }
 
 }
+class Funcionario{
+    String nome;
+    int id, matricula;
+    double salarioFinal;
 
+    public Funcionario (int id,String nome, int matricula,double salarioFinal){
+        this.nome = nome;
+        this.id = id;
+        this.matricula = matricula;
+        this.salarioFinal = salarioFinal;
+    }
+    public void exibirDados(){
+        System.out.println("ID: " + id);
+        System.out.println("Nome: " + nome);
+        System.out.println("Matricula: " + matricula);
+        System.out.println("Salario: " + salarioFinal);
+    }
+
+}
+class FuncionarioComisao extends Funcionario {
+    double valorDeVendas ;
+    int comissao;
+
+    public FuncionarioComisao (int id, String nome,int matricula,double salarioFinal,double valorDeVendas,int comissao){
+        super(id, nome,matricula,salarioFinal);
+        this.valorDeVendas = valorDeVendas;
+        this.comissao = comissao;
+    }
+    @Override
+    public void exibirDados(){
+        super.exibirDados();
+        System.out.println("Valor de Venda: " + valorDeVendas);
+        System.out.println("Valor da Comissão: " + comissao);
+        System.out.println("Salario Final: " + ( salarioFinal+(valorDeVendas*comissao)/100));
+    }
+
+}
+class FuncionarioProducao extends Funcionario {
+    double valorDaPeca;
+    int quantidadeDePecasVendidas;
+
+    public FuncionarioProducao(int id, String nome, int matricula,double salarioFinal, int quantidadeDePecasVendidas, double valorDaPeca){
+        super(id, nome, matricula, salarioFinal);
+        this.quantidadeDePecasVendidas = quantidadeDePecasVendidas;
+        this.valorDaPeca = valorDaPeca;
+    }
+    @Override
+    public void exibirDados() {
+        super.exibirDados();
+        System.out.print("Quantidade de peças vendidas: " + quantidadeDePecasVendidas);
+        System.out.println("Valor da peça: " + valorDaPeca);
+        System.out.println("Salario Final: " + ( salarioFinal+(quantidadeDePecasVendidas * valorDaPeca)));
+    }
+}
