@@ -1,19 +1,26 @@
 # Projeto-Semestre-1
-O projeto do primeiro semestre consiste em criar um codigo, onde seja possivel cadastrar funcionarios de uma 
-determinada empresa, pode ser o funcionario padrão, por comissão ou por produção.
+# Sistema de Gerenciamento de Funcionários
 
-Menu sera exibido informando
- Sistema de cadastramento de Funcionarios
-[1] - Cadastrar funcionario Padrão
-[2] - Cadastrar funcionario Comissionado
-[3] - Cadastrar funcionario Produção
-[4] - Gerar folha do todos Funcioanrios
-[0] - Sair do Sistema
+Projeto desenvolvido para a disciplina de Algoritmos com o objetivo de aplicar conceitos de lógica de programação e Programação Orientada a Objetos (POO) em Java.
 
-Funcionario padrao = recebe nome, matricula e salario.
+## Funcionalidades
 
-Funcionario Comissionado = recebe nome matricula ,salario, quantidade de peças vendidas e a porcentagem da comissão,
-que sera adicionada ao salario final
+* Cadastro de Funcionário Padrão
+* Cadastro de Funcionário Comissionado
+* Cadastro de Funcionário por Produção
+* Geração da folha de pagamento
+* Listagem dos funcionários cadastrados
 
-Funcionario Procução = recebe  nome, matricula ,salario, quantidade de peças produzidas e um valor fixo por cada peça
-sera adicionado ao salario final
+## Conceitos Aplicados
+
+* Estruturas condicionais e de repetição
+* Classes e objetos
+* Herança e polimorfismo
+* ArrayList
+* Tratamento de exceções
+
+## Aprendizados
+
+Este projeto foi uma oportunidade para colocar em prática conceitos estudados em sala e explorar fundamentos de POO, além de desenvolver habilidades com Java, Git e GitHub.
+
+**Tecnologias:** Java | Git | GitHub 🚀
